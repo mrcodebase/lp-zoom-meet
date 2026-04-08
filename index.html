@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate Education | Study Abroad Strategy Session</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --primary-blue:#003874;--navy-dark:#00254d;--navy-light:#1a5a9e;
+  --accent-gold:#FFB800;--gold-dark:#e6a500;--gold-light:#fff3cc;
+  --light-blue:#e8f1fb;--white:#ffffff;--bg-light:#fafbfc;--bg-grey:#f4f6fa;
+  --text-dark:#0d1b2a;--text-muted:#5a6e84;--border-color:#e0e8f0;
+  --radius-sm:6px;--radius-md:12px;--radius-lg:20px;
+  --shadow-sm:0 2px 8px rgba(0,56,116,.08);
+  --shadow-md:0 8px 32px rgba(0,56,116,.12);
+  --shadow-lg:0 20px 60px rgba(0,56,116,.18);
+  --header-h:72px;
+  --transition:all .4s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text-dark);background:var(--white);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Inter',sans-serif;line-height:1.15;font-weight:700}
+h1 em,h2 em{font-style:normal;color:var(--primary-blue)}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+.container{max-width:1180px;margin:0 auto;padding:0 2rem}
+
+/* Animations */
+.reveal,.reveal-left,.reveal-right{opacity:0;transition:opacity .75s cubic-bezier(.4,0,.2,1),transform .75s cubic-bezier(.4,0,.2,1)}
+.reveal{transform:translateY(36px)}
+.reveal-left{transform:translateX(-48px)}
+.reveal-right{transform:translateX(48px)}
+.reveal.active,.reveal-left.active,.reveal-right.active{opacity:1;transform:translate(0)}
+@keyframes floating{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.floating{animation:floating 3.5s ease-in-out infinite}
+.delay1{animation-delay:1.2s}
+
+/* Buttons */
+.btn-gold{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent-gold);color:var(--text-dark);font-weight:700;padding:.9rem 2.2rem;border-radius:var(--radius-sm);font-size:.95rem;transition:var(--transition);box-shadow:0 4px 20px rgba(255,184,0,.35);white-space:nowrap}
+.btn-gold:hover{background:var(--gold-dark);transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,184,0,.45)}
+.btn-sm{padding:.65rem 1.4rem;font-size:.85rem}
+
+/* Badge */
+.badge{display:inline-block;background:var(--light-blue);color:var(--primary-blue);font-weight:700;font-size:.7rem;letter-spacing:1.5px;padding:.35rem 1rem;border-radius:4px;margin-bottom:1rem;text-transform:uppercase}
+.badge-gold{background:var(--gold-light);color:#8a6000}
+
+/* Section header */
+.section-header{text-align:center;max-width:640px;margin:0 auto 4rem}
+.section-header h2{font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:.75rem}
+.section-header p{color:var(--text-muted);font-size:1.05rem}
+
+/* ---- HEADER ---- */
+.header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border-color);height:var(--header-h);transition:box-shadow .3s}
+.header.scrolled{box-shadow:var(--shadow-md)}
+.header-inner{max-width:1180px;margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+.logo img{height:40px;width:auto}
+.logo-text{display:flex;align-items:center;gap:.5rem;font-weight:700}
+.logo-ue{background:var(--primary-blue);color:white;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800}
+.nav ul{display:flex;list-style:none;gap:.25rem}
+.nav-link{color:var(--text-muted);font-weight:600;font-size:.88rem;padding:.5rem .9rem;border-radius:var(--radius-sm);transition:var(--transition)}
+.nav-link:hover,.nav-link.active{color:var(--primary-blue);background:var(--light-blue)}
+.header-right{display:flex;align-items:center;gap:1rem}
+.btn-nav-reg{display:inline-flex;align-items:center;gap:.4rem;background:var(--primary-blue);color:white!important;font-weight:700;font-size:.85rem;padding:.65rem 1.4rem;border-radius:var(--radius-sm);transition:var(--transition)}
+.btn-nav-reg:hover{background:var(--navy-dark);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text-dark);border-radius:2px;transition:var(--transition)}
+
+/* Mobile nav overlay */
+.mobile-nav-overlay{position:fixed;inset:0;z-index:2000;background:var(--primary-blue);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s ease}
+.mobile-nav-overlay.open{opacity:1;pointer-events:all}
+.mobile-nav-close{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,.15);border:none;color:white;width:44px;height:44px;border-radius:50%;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mobile-nav-overlay nav ul{list-style:none;text-align:center}
+.mobile-nav-overlay nav ul li{margin-bottom:1.5rem}
+.mobile-nav-link{color:rgba(255,255,255,.85);font-size:1.5rem;font-weight:700;font-family:'Inter',sans-serif;transition:color .2s}
+.mobile-nav-link:hover{color:var(--accent-gold)}
+.mobile-cta{display:inline-block!important;background:var(--accent-gold)!important;color:var(--text-dark)!important;padding:.75rem 2rem;border-radius:var(--radius-sm);font-family:'Plus Jakarta Sans',sans-serif!important;font-size:1rem!important;margin-top:1rem}
+
+/* ---- HERO ---- */
+.hero{position:relative;background:linear-gradient(160deg,#f0f5ff 0%,#ffffff 50%,#fffbee 100%);overflow:hidden;padding-bottom:0}
+.hero-bg-decor{position:absolute;inset:0;pointer-events:none}
+.decor-circle{position:absolute;border-radius:50%;opacity:.06}
+.c1{width:700px;height:700px;background:var(--primary-blue);top:-200px;right:-200px}
+.c2{width:400px;height:400px;background:var(--accent-gold);bottom:80px;left:-150px}
+.decor-dots{position:absolute;top:10%;left:5%;width:160px;height:160px;background-image:radial-gradient(circle,var(--primary-blue) 1px,transparent 1px);background-size:18px 18px;opacity:.07}
+.hero-inner{max-width:1180px;margin:0 auto;padding:5rem 2rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.event-meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+.event-chip{display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:700;padding:.35rem .85rem;border-radius:100px;letter-spacing:.3px}
+.event-chip.free{background:#e6f9ef;color:#1a7a45}
+.event-chip.date{background:var(--light-blue);color:var(--primary-blue)}
+.event-chip.zoom{background:#e8f0fe;color:#1a56db}
+.hero-title{font-size:clamp(2.4rem,5vw,3.8rem);color:var(--text-dark);margin-bottom:.5rem;letter-spacing:-.02em}
+.hero-title em{color:var(--primary-blue);display:block}
+.hero-subtitle{font-size:.95rem;font-weight:700;color:var(--navi-dark);text-transform:uppercase;letter-spacing:.5px;margin-bottom:1rem}
+.hero-desc{font-size:1rem;color:var(--text-muted);margin-bottom:1.5rem;max-width:480px;line-height:1.75}
+.hero-topics{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:2rem}
+.topic-pill{display:flex;align-items:center;gap:.5rem;font-size:.85rem;font-weight:600;color:var(--text-dark)}
+.topic-pill i{color:var(--primary-blue);font-size:.75rem;flex-shrink:0}
+.hero-actions{display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;margin-bottom:2rem}
+.seats-note{font-size:.8rem;color:#c0392b;font-weight:600;display:flex;align-items:center;gap:.4rem}
+.hero-countdown-wrap{border-top:1px solid var(--border-color);padding-top:1.5rem}
+.countdown-label{font-size:.78rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.75rem}
+.hero-countdown{display:flex;gap:.75rem}
+.time-box{background:var(--primary-blue);color:white;border-radius:var(--radius-sm);padding:.75rem 1rem;text-align:center;min-width:68px}
+.time-box span{display:block;font-size:1.5rem;font-weight:800;line-height:1;font-family:'Plus Jakarta Sans',sans-serif}
+.time-box label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:.75;margin-top:4px;display:block}
+.hero-right{position:relative}
+.speaker-card{border-radius:var(--radius-lg);overflow:visible;box-shadow:var(--shadow-lg);background:white;border:1px solid var(--border-color)}
+.speaker-img-wrap{position:relative}
+.speaker-img-wrap img{width:100%;aspect-ratio:4/4.5;object-fit:cover;display:block}
+.speaker-badge{position:absolute;background:var(--primary-blue);color:white;display:flex;align-items:center;gap:.5rem;padding:.65rem 1.1rem;border-radius:var(--radius-md);font-size:.78rem;font-weight:700;box-shadow:var(--shadow-md);white-space:nowrap;z-index:2}
+.speaker-badge i{color:var(--accent-gold);font-size:.9rem}
+.speaker-badge.top-right{top:20px;right:-20px}
+.speaker-badge.bottom-left{bottom:30px;left:-20px;background:var(--accent-gold);color:var(--text-dark)}
+.speaker-badge.bottom-left i{color:var(--text-dark)}
+.speaker-card-footer{padding:1.25rem 1.5rem;border-top:1px solid var(--border-color);display:flex;flex-direction:column;gap:1rem}
+.speaker-name{font-weight:800;font-size:1.25rem;margin-bottom:4px}
+.speaker-stats .speaker-name{font-size:.95rem;font-weight:600;margin-bottom:0;line-height:1.5}
+.speaker-role{font-size:.78rem;color:var(--text-muted);font-weight:500}
+.speaker-stats{display:flex;flex-direction:column;gap:.25rem}
+.speaker-stat strong{display:block;font-size:1.1rem;color:var(--primary-blue)}
+.speaker-stat span{font-size:.7rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+
+/* Trust bar */
+.trust-bar{border-top:1px solid var(--border-color);background:white;padding:1rem 2rem;margin-top:3rem}
+.trust-bar-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;font-size:.82rem;font-weight:600;color:var(--text-muted)}
+.trust-bar-inner i{color:var(--primary-blue)}
+.divider{color:var(--border-color);font-size:1.2rem}
+
+/* ---- FEATURES ---- */
+.features{padding:7rem 0;background:var(--bg-grey)}
+.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+.feature-card{background:white;border:1px solid var(--border-color);border-radius:var(--radius-md);padding:2.25rem 1.75rem;display:flex;flex-direction:column;transition:var(--transition);position:relative;overflow:hidden}
+.feature-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary-blue),var(--navy-light));transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+.feature-card:hover::before{transform:scaleX(1)}
+.feature-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg);border-color:transparent}
+.feature-card.highlighted{background:var(--primary-blue);color:white;border-color:transparent}
+.feature-card.highlighted::before{display:none}
+.feature-number{font-size:.7rem;font-weight:800;letter-spacing:2px;color:var(--border-color);margin-bottom:1rem}
+.feature-card.highlighted .feature-number{color:rgba(255,255,255,.2)}
+.feature-icon{font-size:1.75rem;color:var(--primary-blue);margin-bottom:1.25rem}
+.feature-card.highlighted .feature-icon{color:var(--accent-gold)}
+.feature-card h3{font-size:1.1rem;font-family:'Inter',sans-serif;font-weight:700;margin-bottom:.75rem}
+.feature-card p{font-size:.88rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.25rem;flex-grow:1}
+.feature-card.highlighted p{color:rgba(255,255,255,.75)}
+.btn-read{font-size:.75rem;font-weight:700;letter-spacing:1.5px;color:var(--primary-blue);display:inline-flex;align-items:center;gap:.4rem;margin-top:auto;padding-top:1rem;border-top:1px solid var(--border-color);transition:gap .25s}
+.feature-card.highlighted .btn-read{color:var(--accent-gold);border-top-color:rgba(255,255,255,.15)}
+.btn-read:hover{gap:.7rem}
+.btn-read i{transition:transform .3s}
+.feature-card.expanded .btn-read i{transform:rotate(90deg)}
+.feature-description-extra{max-height:0;overflow:hidden;opacity:0;transition:max-height .45s ease,opacity .45s ease,margin .45s ease;font-size:.85rem}
+.feature-card.expanded .feature-description-extra{max-height:200px;opacity:1;margin-bottom:.5rem}
+.feature-description-extra ul{list-style:none}
+.feature-description-extra ul li{padding:.45rem 0;display:flex;align-items:center;gap:.6rem;border-bottom:1px dashed rgba(0,56,116,.1);color:var(--text-muted)}
+.feature-description-extra ul li::before{content:"\f00c";font-family:"Font Awesome 6 Free";font-weight:900;color:var(--primary-blue);font-size:.65rem;flex-shrink:0}
+.feature-card.highlighted .feature-description-extra ul li::before{color:var(--accent-gold)}
+.feature-card.highlighted .feature-description-extra ul li{color:rgba(255,255,255,.8);border-bottom-color:rgba(255,255,255,.1)}
+
+/* ---- SPEAKER SECTION ---- */
+.speaker-section{padding:7rem 0;background:white}
+.speaker-full-wrap{display:grid;grid-template-columns:420px 1fr;gap:5rem;align-items:center}
+.speaker-full-img{position:relative}
+.speaker-full-img img{width:100%;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);aspect-ratio:440/520;object-fit:cover}
+.ielts-badge{position:absolute;bottom:-20px;right:-20px;background:var(--accent-gold);border-radius:var(--radius-md);padding:1rem 1.25rem;display:flex;align-items:center;gap:.75rem;box-shadow:var(--shadow-md);font-size:.8rem;font-weight:700;line-height:1.3;color:var(--text-dark)}
+.ielts-score{font-size:2rem;font-weight:800;line-height:1}
+.speaker-full-content h2{font-size:clamp(2rem,3.5vw,3rem);margin-bottom:.25rem}
+.speaker-tagline{color:var(--primary-blue);font-weight:700;font-size:1rem;margin-bottom:1.25rem}
+.speaker-bio{color:var(--text-muted);line-height:1.8;margin-bottom:2rem}
+.speaker-credentials{display:flex;flex-direction:column;gap:.75rem;margin-bottom:2.5rem}
+.cred-item{display:flex;align-items:center;gap:.85rem;font-size:.92rem;font-weight:600}
+.cred-item i{width:36px;height:36px;background:var(--light-blue);color:var(--primary-blue);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.speaker-nums{display:flex;gap:2.5rem;padding-top:2rem;border-top:1px solid var(--border-color)}
+.speaker-num-item strong{display:block;font-size:2rem;font-family:'Inter',sans-serif;color:var(--primary-blue);line-height:1;margin-bottom:4px}
+.speaker-num-item span{font-size:.78rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+
+/* ---- BONUS ---- */
+.bonus{padding:7rem 0;background:var(--bg-grey)}
+.bonus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.bonus-card{background:white;border:1px solid var(--border-color);border-radius:var(--radius-md);padding:2.5rem 2rem;text-align:center;transition:var(--transition)}
+.bonus-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.bonus-card.highlight{background:var(--primary-blue);color:white;border-color:transparent;position:relative}
+.bonus-card.highlight::after{content:'PALING POPULER';position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--accent-gold);color:var(--text-dark);font-size:.65rem;font-weight:800;letter-spacing:2px;padding:.3rem 1rem;border-radius:100px;white-space:nowrap}
+.bonus-icon{width:64px;height:64px;background:var(--light-blue);color:var(--primary-blue);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1.25rem}
+.bonus-card.highlight .bonus-icon{background:rgba(255,255,255,.15);color:var(--accent-gold)}
+.bonus-tag{font-size:.7rem;font-weight:800;letter-spacing:2px;color:var(--accent-gold);text-transform:uppercase;margin-bottom:.5rem}
+.bonus-card h3{font-size:1.15rem;font-family:'Inter',sans-serif;font-weight:700;margin-bottom:.75rem}
+.bonus-card p{font-size:.88rem;color:var(--text-muted);line-height:1.75;margin-bottom:1.5rem}
+.bonus-card.highlight p{color:rgba(255,255,255,.75)}
+.bonus-value{display:inline-block;background:var(--light-blue);color:var(--primary-blue);font-size:.78rem;font-weight:700;padding:.35rem 1rem;border-radius:100px}
+.bonus-card.highlight .bonus-value{background:rgba(255,255,255,.15);color:rgba(255,255,255,.9)}
+
+/* ---- REGISTRATION ---- */
+.registration{padding:7rem 0;background:linear-gradient(135deg,var(--navy-dark) 0%,var(--primary-blue) 50%,#1a5a9e 100%);position:relative;overflow:hidden}
+.reg-bg-decor{position:absolute;inset:0;pointer-events:none}
+.reg-decor-circle{position:absolute;border-radius:50%;background:rgba(255,255,255,.04)}
+.r1{width:600px;height:600px;top:-200px;right:-200px}
+.r2{width:400px;height:400px;bottom:-150px;left:-100px}
+.reg-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:start}
+.reg-info{color:white}
+.reg-info .badge{background:rgba(255,184,0,.2);color:var(--accent-gold)}
+.reg-info h2{font-size:clamp(2rem,3.5vw,3rem);color:white;margin-bottom:1rem}
+.reg-info h2 em{color:var(--accent-gold)}
+.reg-info > p{color:rgba(255,255,255,.75);margin-bottom:2rem;line-height:1.8}
+.event-details-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:2rem}
+.event-detail-item{display:flex;align-items:center;gap:1rem}
+.event-detail-item i{width:44px;height:44px;background:rgba(255,255,255,.1);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--accent-gold);flex-shrink:0}
+.event-detail-item strong{display:block;font-size:.95rem;color:white}
+.event-detail-item span{font-size:.8rem;color:rgba(255,255,255,.6)}
+.reg-countdown-wrap{padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.1)}
+.reg-countdown-wrap .countdown-label{color:rgba(255,255,255,.6)}
+.countdown{display:flex;gap:.75rem;margin-top:.5rem}
+.time{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:var(--radius-sm);padding:.75rem 1rem;text-align:center;min-width:64px;color:white}
+.time span{display:block;font-size:1.4rem;font-weight:800;line-height:1}
+.time label{display:block;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:.6;margin-top:4px}
+.reg-form-card{background:white;border-radius:var(--radius-lg);padding:2.5rem;box-shadow:0 32px 80px rgba(0,0,0,.25)}
+.form-card-header{margin-bottom:2rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border-color)}
+.form-card-header h3{font-size:1.1rem;font-family:'Inter',sans-serif;font-weight:700;color:var(--text-dark);display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem}
+.form-card-header h3 i{color:var(--primary-blue)}
+.form-card-header p{font-size:.82rem;color:var(--text-muted)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.25rem;margin-bottom:1.25rem}
+.full-width{grid-column:1/-1}
+.form-group{display:flex;flex-direction:column;gap:.35rem}
+.form-group label{font-size:.78rem;font-weight:700;color:var(--text-muted);display:flex;align-items:center;gap:.35rem}
+.form-group label i{font-size:.7rem;color:var(--primary-blue)}
+.form-group input,.form-group select{width:100%;padding:.75rem 1rem;border:1.5px solid var(--border-color);border-radius:var(--radius-sm);font-family:inherit;font-size:.88rem;color:var(--text-dark);background:var(--bg-light);transition:border-color .25s,box-shadow .25s;-webkit-appearance:none;appearance:none}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--primary-blue);box-shadow:0 0 0 3px rgba(0,56,116,.1);background:white}
+.form-group input::placeholder{color:#b0bec5}
+.form-group select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a6e84' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.5rem;cursor:pointer}
+.btn-register{width:100%;padding:1rem;background:var(--primary-blue);color:white;border:none;border-radius:var(--radius-sm);font-family:inherit;font-weight:700;font-size:1rem;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:.5rem}
+.btn-register:hover{background:var(--navy-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,56,116,.3)}
+.btn-register:disabled{background:#4caf50;transform:none;box-shadow:none;cursor:default}
+.form-note{text-align:center;font-size:.75rem;color:var(--text-muted);margin-top:.75rem;display:flex;align-items:center;justify-content:center;gap:.4rem}
+.form-note i{color:#2e7d32}
+
+/* ---- FAQ ---- */
+.faq{padding:7rem 0;background:var(--bg-grey)}
+.accordion{max-width:740px;margin:0 auto;display:flex;flex-direction:column;gap:.75rem}
+.accordion-item{background:white;border:1px solid var(--border-color);border-radius:var(--radius-md);overflow:hidden;transition:box-shadow .3s}
+.accordion-item.is-open,.accordion-item:hover{box-shadow:var(--shadow-md)}
+.accordion-item.is-open{border-color:var(--primary-blue)}
+.accordion-header{padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:700;font-size:.92rem;gap:1rem;user-select:none}
+.accordion-icon{width:28px;height:28px;background:var(--bg-grey);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;color:var(--text-muted);transition:var(--transition)}
+.accordion-item.is-open .accordion-icon{background:var(--primary-blue);color:white;transform:rotate(45deg)}
+.accordion-content{display:none;padding:0 1.5rem 1.5rem;font-size:.9rem;color:var(--text-muted);line-height:1.75}
+.accordion-content strong{color:var(--text-dark)}
+.accordion-item.is-open .accordion-content{display:block}
+
+/* ---- FOOTER ---- */
+.footer{background:var(--navy-dark);color:white;padding:3rem 2rem 1.5rem}
+.footer-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:1.5rem}
+.footer-brand img{height:32px;margin-bottom:.5rem}
+.footer-brand p{font-size:.82rem;color:rgba(255,255,255,.55);max-width:260px;line-height:1.6}
+.footer-links{display:flex;gap:1.25rem;flex-wrap:wrap}
+.footer-links a{font-size:.85rem;color:rgba(255,255,255,.65);font-weight:500;transition:color .2s}
+.footer-links a:hover{color:var(--accent-gold)}
+.footer-bottom{text-align:center;font-size:.78rem;color:rgba(255,255,255,.4);max-width:1180px;margin:0 auto}
+
+/* Floating CTA */
+.floating-cta{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--accent-gold);color:var(--text-dark);font-weight:700;font-size:.88rem;padding:.8rem 1.5rem;border-radius:100px;box-shadow:0 8px 28px rgba(255,184,0,.45);display:flex;align-items:center;gap:.4rem;z-index:999;opacity:0;transform:translateY(20px);transition:var(--transition);pointer-events:none}
+.floating-cta.visible{opacity:1;transform:translateY(0);pointer-events:all}
+
+/* ---- RESPONSIVE ---- */
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr 1fr;gap:2.5rem;padding:4rem 2rem 2.5rem}
+  .features-grid{grid-template-columns:1fr 1fr}
+  .speaker-full-wrap{grid-template-columns:1fr 1fr;gap:3rem}
+  .reg-wrap{grid-template-columns:1fr;gap:3rem}
+  .bonus-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  :root{--header-h:62px}
+  .nav{display:none}
+  .hamburger{display:flex}
+  .btn-nav-reg{display:none}
+  .hero-inner{grid-template-columns:1fr;padding:3rem 1.5rem 2rem;text-align:center}
+  .hero-left{order:2}
+  .hero-right{order:1;max-width:340px;margin:0 auto}
+  .hero-desc{max-width:100%}
+  .event-meta{justify-content:center}
+  .hero-topics{grid-template-columns:1fr;max-width:260px;margin:0 auto 2rem;text-align:left}
+  .hero-actions{align-items:center}
+  .hero-countdown{justify-content:center}
+  .hero-countdown-wrap{text-align:center}
+  .speaker-badge.top-right{right:10px}
+  .speaker-badge.bottom-left{left:10px}
+  .trust-bar{padding:1rem}
+  .trust-bar-inner{gap:.5rem;font-size:.75rem;justify-content:flex-start}
+  .divider{display:none}
+  .features{padding:5rem 0}
+  .features-grid{grid-template-columns:1fr}
+  .speaker-section{padding:5rem 0}
+  .speaker-full-wrap{grid-template-columns:1fr;gap:2rem;text-align:center}
+  .speaker-full-img{max-width:300px;margin:0 auto}
+  .ielts-badge{bottom:-12px;right:0}
+  .speaker-credentials{align-items:flex-start;text-align:left}
+  .speaker-nums{justify-content:center;gap:2rem}
+  .cred-item{justify-content:flex-start}
+  .bonus{padding:5rem 0}
+  .bonus-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
+  .registration{padding:5rem 0}
+  .reg-form-card{padding:1.75rem}
+  .form-grid{grid-template-columns:1fr}
+  .faq{padding:5rem 0}
+  .footer-inner{flex-direction:column;align-items:flex-start}
+  .floating-cta{bottom:1rem;right:1rem;left:1rem;justify-content:center}
+  .section-header{margin-bottom:2.5rem}
+  .container{padding:0 1.25rem}
+}
+@media(max-width:400px){
+  .hero-title{font-size:2.1rem}
+  .time-box{min-width:56px;padding:.6rem .7rem}
+  .time-box span{font-size:1.2rem}
+  .reg-form-card{padding:1.25rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <div class="header-inner">
+    <div class="logo">
+      <img src="logo-ue.webp" alt="Ultimate Education" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="logo-text" style="display:none">
+        <div class="logo-ue">UE</div>
+        <span style="font-weight:800;color:var(--primary-blue)">Ultimate Education</span>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <ul>
+        <li><a href="#overview" class="nav-link active">Home</a></li>
+        <li><a href="#content" class="nav-link">Session</a></li>
+        <li><a href="#speaker" class="nav-link">Speaker</a></li>
+        <li><a href="#bonus" class="nav-link">Bonus</a></li>
+        <li><a href="#faq" class="nav-link">FAQ</a></li>
+      </ul>
+    </nav>
+    <div class="header-right">
+      <a href="#register" class="btn-nav-reg">Daftar Gratis <i class="fa-solid fa-arrow-right"></i></a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav-overlay" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose"><i class="fa-solid fa-xmark"></i></button>
+  <nav>
+    <ul>
+      <li><a href="#overview" class="mobile-nav-link">Home</a></li>
+      <li><a href="#content" class="mobile-nav-link">Session</a></li>
+      <li><a href="#speaker" class="mobile-nav-link">Speaker</a></li>
+      <li><a href="#bonus" class="mobile-nav-link">Bonus</a></li>
+      <li><a href="#faq" class="mobile-nav-link">FAQ</a></li>
+      <li><a href="#register" class="mobile-nav-link mobile-cta">Daftar Gratis →</a></li>
+    </ul>
+  </nav>
+</div>
+
+<main>
+<!-- ===== HERO ===== -->
+<section class="hero" id="overview">
+  <div class="hero-bg-decor">
+    <div class="decor-circle c1"></div>
+    <div class="decor-circle c2"></div>
+    <div class="decor-dots"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-left reveal-left">
+      <div class="event-meta">
+        <span class="event-chip free"><i class="fa-solid fa-circle-check"></i> 100% FREE</span>
+        <span class="event-chip date"><i class="fa-regular fa-calendar"></i> 2 Mei 2026 · 13.00 WIB</span>
+        <span class="event-chip zoom"><i class="fa-solid fa-video"></i> Zoom Meet</span>
+      </div>
+      <h1 class="hero-title">Study Abroad<em>Strategy Session</em></h1>
+      <p class="hero-subtitle">Master's Application Roadmap 2026–2027</p>
+      <p class="hero-desc">Pelajari strategi lengkap mempersiapkan aplikasi studi luar negeri — mulai dari timeline, persyaratan universitas, persiapan tes, hingga beasiswa.</p>
+      <div class="hero-topics">
+        <div class="topic-pill"><i class="fa-solid fa-check"></i> Study Abroad Timeline</div>
+        <div class="topic-pill"><i class="fa-solid fa-check"></i> Admission Requirements</div>
+        <div class="topic-pill"><i class="fa-solid fa-check"></i> IELTS / GRE / GMAT Strategy</div>
+        <div class="topic-pill"><i class="fa-solid fa-check"></i> Scholarship Opportunities</div>
+      </div>
+      <div class="hero-actions">
+        <a href="#register" class="btn-gold">Reserve Your Free Spot <i class="fa-solid fa-arrow-right"></i></a>
+        <p class="seats-note"><i class="fa-solid fa-fire"></i> Limited seats — daftar sekarang!</p>
+      </div>
+      <div class="hero-countdown-wrap">
+        <p class="countdown-label">Webinar dimulai dalam:</p>
+        <div class="hero-countdown" id="hero-countdown">
+          <div class="time-box"><span>00</span><label>Days</label></div>
+          <div class="time-box"><span>00</span><label>Hours</label></div>
+          <div class="time-box"><span>00</span><label>Mins</label></div>
+          <div class="time-box"><span>00</span><label>Secs</label></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right reveal-right">
+      <div class="speaker-card">
+        <div class="speaker-img-wrap">
+          <img src="hero.jpeg" alt="Kak Ritzmi - Speaker">
+          <div class="speaker-badge top-right floating"><i class="fa-solid fa-star"></i><span>IELTS 8.0</span></div>
+          <div class="speaker-badge bottom-left floating delay1"><i class="fa-solid fa-graduation-cap"></i><span>University of MInnesota</span></div>
+        </div>
+        <div class="speaker-card-footer">
+          <div>
+            <p class="speaker-name">Kak Ritzmi</p>
+          </div>
+          <div class="speaker-stats">
+            <p class="speaker-name">Diterima di 8 Kampus Top 100 Dunia</p>
+            <p class="speaker-name">LPDP Awardee Master of Business Taxation</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="trust-bar reveal">
+    <div class="trust-bar-inner">
+      <span><i class="fa-solid fa-users"></i> Free Placement Test</span>
+      <span class="divider">·</span>
+      <span><i class="fa-solid fa-globe"></i> Free Consultation Session</span>
+      <span class="divider">·</span>
+      <span><i class="fa-solid fa-award"></i> Diskon Program Persiapan</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="features" id="content">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="badge">SESSION HIGHLIGHTS</span>
+      <h2>Yang Akan Kamu Pelajari</h2>
+      <p>Dari nol sampai siap daftar universitas luar negeri — semua dibahas dalam satu sesi.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card highlighted reveal">
+        <div class="feature-number">01</div>
+        <div class="feature-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+        <h3>Study Abroad Timeline</h3>
+        <p>Roadmap lengkap persiapan aplikasi untuk intake 2026–2027 agar tidak ketinggalan deadline penting.</p>
+        <div class="feature-description-extra"><ul><li>Early preparation tips</li><li>Application deadlines</li><li>Visa processing time</li></ul></div>
+        <a href="javascript:void(0)" class="btn-read">READ MORE <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-number">02</div>
+        <div class="feature-icon"><i class="fa-solid fa-building-columns"></i></div>
+        <h3>University Admission</h3>
+        <p>Panduan mendalam mengenai persyaratan akademik dan dokumen yang dibutuhkan universitas terbaik dunia.</p>
+        <div class="feature-description-extra"><ul><li>Personal Statement guide</li><li>Recommendation letters</li><li>Academic transcripts</li></ul></div>
+        <a href="javascript:void(0)" class="btn-read">READ MORE <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-number">03</div>
+        <div class="feature-icon"><i class="fa-solid fa-book-open"></i></div>
+        <h3>Test Preparation</h3>
+        <p>Strategi efektif dan terbukti untuk persiapan IELTS, GRE, dan GMAT yang bisa langsung diterapkan.</p>
+        <div class="feature-description-extra"><ul><li>Score requirements</li><li>Section-by-section tips</li><li>Practice resources</li></ul></div>
+        <a href="javascript:void(0)" class="btn-read">READ MORE <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-number">04</div>
+        <div class="feature-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+        <h3>Scholarship Opportunities</h3>
+        <p>Temukan dan apply beasiswa internasional yang sesuai dengan profil dan target universitasmu.</p>
+        <div class="feature-description-extra"><ul><li>Major scholarship types</li><li>Funding criteria</li><li>Grant writing advice</li></ul></div>
+        <a href="javascript:void(0)" class="btn-read">READ MORE <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SPEAKER ===== -->
+<section class="speaker-section" id="speaker">
+  <div class="container">
+    <div class="speaker-full-wrap">
+      <div class="speaker-full-img reveal-left">
+        <img src="image.jpeg" alt="Kak Ritzmi">
+        <div class="ielts-badge floating"><div class="ielts-score">8.0</div><div>IELTS<br>Score</div></div>
+      </div>
+      <div class="speaker-full-content reveal-right">
+        <span class="badge">YOUR HOST</span>
+        <h2>Kak Ritzmi</h2>
+        <p class="speaker-tagline">Study Abroad Expert & IELTS Specialist</p>
+        <p class="speaker-bio">Instruktur berpengalaman di Ultimate Education dengan latar belakang lulusan Universitas Cambridge. Telah membantu lebih dari 1.00 pelajar Indonesia meraih impian studi di luar negeri di 10+ negara tujuan.</p>
+        <div class="speaker-credentials">
+          <div class="cred-item"><i class="fa-solid fa-graduation-cap"></i><span>University of Minnesota</span></div>
+          <div class="cred-item"><i class="fa-solid fa-star"></i><span>IELTS Score 8.0+</span></div>
+          <div class="cred-item"><i class="fa-solid fa-chalkboard-user"></i><span>Teacher at Ultimate Education</span></div>
+          <div class="cred-item"><i class="fa-solid fa-users"></i><span>1,00+ students guided</span></div>
+        </div>
+        <div class="speaker-nums">
+          <div class="speaker-num-item"><strong>100+</strong><span>Students guided</span></div>
+          <div class="speaker-num-item"><strong>5+</strong><span>Years experience</span></div>
+          <div class="speaker-num-item"><strong>10+</strong><span>Target countries</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BONUS ===== -->
+<section class="bonus" id="bonus">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="badge">EXCLUSIVE BONUS</span>
+      <h2>Bonus untuk Peserta Webinar</h2>
+      <p>Daftar hari ini dan dapatkan manfaat eksklusif — gratis!</p>
+    </div>
+    <div class="bonus-grid">
+      <div class="bonus-card reveal">
+        <div class="bonus-icon"><i class="fa-solid fa-flask"></i></div>
+        <div class="bonus-tag">Bonus #1</div>
+        <h3>Free Placement Test</h3>
+        <p>Tes kemampuan bahasa Inggris (IELTS / GRE / GMAT) gratis untuk mengetahui level awal dan rencana belajar yang tepat.</p>
+        <div class="bonus-value">Senilai Rp 250.000</div>
+      </div>
+      <div class="bonus-card highlight reveal">
+        <div class="bonus-icon"><i class="fa-solid fa-comments"></i></div>
+        <div class="bonus-tag">Bonus #2</div>
+        <h3>Free Consultation Session</h3>
+        <p>Sesi konsultasi 1-on-1 dengan expert kami untuk membahas strategi aplikasi dan target universitas pilihanmu.</p>
+        <div class="bonus-value">Senilai Rp 500.000</div>
+      </div>
+      <div class="bonus-card reveal">
+        <div class="bonus-icon"><i class="fa-solid fa-tags"></i></div>
+        <div class="bonus-tag">Bonus #3</div>
+        <h3>Diskon Program Persiapan</h3>
+        <p>Diskon khusus untuk program IELTS, GRE, dan GMAT di Ultimate Education — eksklusif hanya untuk peserta webinar.</p>
+        <div class="bonus-value">Eksklusif Peserta</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== REGISTRATION ===== -->
+<section class="registration" id="register">
+  <div class="reg-bg-decor">
+    <div class="reg-decor-circle r1"></div>
+    <div class="reg-decor-circle r2"></div>
+  </div>
+  <div class="container">
+    <div class="reg-wrap reveal">
+      <div class="reg-info">
+        <span class="badge badge-gold">DAFTAR SEKARANG</span>
+        <h2>Reserve Your <br><em>Free Spot</em></h2>
+        <p>Tempat sangat terbatas untuk menjaga sesi tetap interaktif dan personal. Daftarkan dirimu sekarang!</p>
+        <div class="event-details-list">
+          <div class="event-detail-item">
+            <i class="fa-regular fa-calendar-days"></i>
+            <div><strong>2 Mei 2026</strong><span>Sabtu, 13.00 WIB</span></div>
+          </div>
+          <div class="event-detail-item">
+            <i class="fa-solid fa-video"></i>
+            <div><strong>Zoom Online</strong><span>Link dikirim via email</span></div>
+          </div>
+          <div class="event-detail-item">
+            <i class="fa-solid fa-circle-dollar-to-slot"></i>
+            <div><strong>Gratis 100%</strong><span>Tidak dipungut biaya</span></div>
+          </div>
+        </div>
+        <div class="reg-countdown-wrap">
+          <p class="countdown-label">Pendaftaran ditutup dalam:</p>
+          <div class="countdown" id="countdown">
+            <div class="time"><span>00</span><label>D</label></div>
+            <div class="time"><span>00</span><label>H</label></div>
+            <div class="time"><span>00</span><label>M</label></div>
+            <div class="time"><span>00</span><label>S</label></div>
+          </div>
+        </div>
+      </div>
+      <div class="reg-form-card">
+        <div class="form-card-header">
+          <h3><i class="fa-solid fa-pen-to-square"></i> Formulir Pendaftaran</h3>
+          <p>Isi data dengan benar untuk mendapatkan konfirmasi via WhatsApp</p>
+        </div>
+        <form id="regForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label><i class="fa-regular fa-user"></i> Nama Lengkap</label>
+              <input type="text" placeholder="Nama kamu" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fa-regular fa-envelope"></i> Email</label>
+              <input type="email" placeholder="email@kamu.com" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fa-brands fa-whatsapp"></i> WhatsApp</label>
+              <input type="tel" placeholder="08xxxxxxxxxx" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fa-solid fa-id-badge"></i> Status Saat Ini</label>
+              <input type="text" placeholder="Mahasiswa / Karyawan / dll" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fa-solid fa-graduation-cap"></i> Target Jenjang</label>
+              <select required>
+                <option value="" disabled selected>Pilih jenjang</option>
+                <option value="bachelor">Bachelor (S1)</option>
+                <option value="master">Master (S2)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label><i class="fa-regular fa-calendar"></i> Target Intake</label>
+              <select required>
+                <option value="" disabled selected>Pilih intake</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label><i class="fa-solid fa-globe"></i> Negara Tujuan</label>
+              <input type="text" placeholder="UK, USA, Australia..." required>
+            </div>
+            <div class="form-group">
+              <label><i class="fa-solid fa-language"></i> Status Tes Bahasa</label>
+              <select required>
+                <option value="" disabled selected>Pilih status</option>
+                <option value="none">Belum ada</option>
+                <option value="preparing">Sedang persiapan IELTS</option>
+                <option value="ready">Sudah punya skor</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label><i class="fa-solid fa-ticket"></i> Kode Referral (opsional)</label>
+              <input type="text" placeholder="Masukkan kode jika ada">
+            </div>
+          </div>
+          <button type="submit" class="btn-register" id="submitBtn">
+            <span>Daftar Webinar Gratis</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <p class="form-note"><i class="fa-solid fa-shield-halved"></i> Data kamu aman dan tidak akan dibagikan ke pihak ketiga.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="badge">FAQ</span>
+      <h2>Pertanyaan yang Sering Ditanyakan</h2>
+      <p>Masih ada pertanyaan? Hubungi kami via WhatsApp.</p>
+    </div>
+    <div class="accordion">
+      <div class="accordion-item is-open reveal">
+        <div class="accordion-header"><span>Kapan dan di mana webinar ini diadakan?</span><div class="accordion-icon"><i class="fa-solid fa-plus"></i></div></div>
+        <div class="accordion-content"><p>Webinar diadakan pada <strong>2 Mei 2026 pukul 13.00 WIB</strong> melalui platform <strong>Zoom</strong>. Link Zoom akan dikirimkan ke email kamu setelah mendaftar.</p></div>
+      </div>
+      <div class="accordion-item reveal">
+        <div class="accordion-header"><span>Apakah webinar ini benar-benar gratis?</span><div class="accordion-icon"><i class="fa-solid fa-plus"></i></div></div>
+        <div class="accordion-content"><p>Ya! Webinar ini <strong>100% gratis</strong>. Tidak ada biaya pendaftaran sama sekali. Ini adalah bentuk komitmen Ultimate Education untuk membantu pelajar Indonesia meraih impian studi di luar negeri.</p></div>
+      </div>
+      <div class="accordion-item reveal">
+        <div class="accordion-header"><span>Bisakah saya bertanya langsung kepada Kak Ritzmi?</span><div class="accordion-icon"><i class="fa-solid fa-plus"></i></div></div>
+        <div class="accordion-content"><p>Tentu! Ada sesi <strong>Q&A khusus</strong> di akhir webinar di mana kamu bisa langsung bertanya kepada Kak Ritzmi tentang rencana studi dan persiapanmu.</p></div>
+      </div>
+      <div class="accordion-item reveal">
+        <div class="accordion-header"><span>Apakah ada rekaman webinar?</span><div class="accordion-icon"><i class="fa-solid fa-plus"></i></div></div>
+        <div class="accordion-content"><p>Ya, semua peserta yang terdaftar akan mendapatkan <strong>link rekaman dan materi presentasi</strong> via email dalam 24 jam setelah sesi berlangsung.</p></div>
+      </div>
+      <div class="accordion-item reveal">
+        <div class="accordion-header"><span>Apa yang perlu saya persiapkan sebelum webinar?</span><div class="accordion-icon"><i class="fa-solid fa-plus"></i></div></div>
+        <div class="accordion-content"><p>Cukup siapkan <strong>koneksi internet yang stabil</strong> dan catatan. Jika sudah punya daftar target universitas dan negara, itu akan sangat membantu agar sesi konsultasi lebih terarah.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-bottom">
+    <p>&copy; 2026 Ultimate Education. All Rights Reserved. See you in the webinar! 🎓</p>
+  </div>
+</footer>
+
+<a href="#register" class="floating-cta" id="floatingCta">Daftar Gratis <i class="fa-solid fa-arrow-right"></i></a>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  // 1. Countdown
+  const countdown = () => {
+    const target = new Date('May 2, 2026 13:00:00').getTime();
+    const gap = target - Date.now();
+    const s=1000,m=s*60,h=m*60,d=h*24;
+    const fmt=n=>(n<10?'0':'')+Math.max(0,n);
+    const dd=Math.floor(gap/d),hh=Math.floor((gap%d)/h),mm=Math.floor((gap%h)/m),ss=Math.floor((gap%m)/s);
+    const heroEl=document.getElementById('hero-countdown');
+    if(heroEl) heroEl.innerHTML=`<div class="time-box"><span>${fmt(dd)}</span><label>Days</label></div><div class="time-box"><span>${fmt(hh)}</span><label>Hours</label></div><div class="time-box"><span>${fmt(mm)}</span><label>Mins</label></div><div class="time-box"><span>${fmt(ss)}</span><label>Secs</label></div>`;
+    const regEl=document.getElementById('countdown');
+    if(regEl) regEl.innerHTML=`<div class="time"><span>${fmt(dd)}</span><label>D</label></div><div class="time"><span>${fmt(hh)}</span><label>H</label></div><div class="time"><span>${fmt(mm)}</span><label>M</label></div><div class="time"><span>${fmt(ss)}</span><label>S</label></div>`;
+  };
+  countdown(); setInterval(countdown,1000);
+
+  // 2. Mobile nav
+  const hamburger=document.getElementById('hamburger');
+  const mobileNav=document.getElementById('mobileNav');
+  const mobileNavClose=document.getElementById('mobileNavClose');
+  hamburger?.addEventListener('click',()=>{mobileNav.classList.add('open');document.body.style.overflow='hidden'});
+  mobileNavClose?.addEventListener('click',()=>{mobileNav.classList.remove('open');document.body.style.overflow=''});
+  document.querySelectorAll('.mobile-nav-link').forEach(l=>l.addEventListener('click',()=>{mobileNav.classList.remove('open');document.body.style.overflow=''}));
+
+  // 3. Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(link=>{
+    link.addEventListener('click',e=>{
+      const href=link.getAttribute('href');
+      if(href==='#') return;
+      const target=document.querySelector(href);
+      if(target){e.preventDefault();const hh=document.getElementById('header')?.offsetHeight||72;window.scrollTo({top:target.getBoundingClientRect().top+window.scrollY-hh-12,behavior:'smooth'})}
+    });
+  });
+
+  // 4. Active nav
+  const sections=document.querySelectorAll('section[id]');
+  const navLinks=document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll',()=>{
+    let current='';
+    const hh=document.getElementById('header')?.offsetHeight||72;
+    sections.forEach(s=>{if(window.scrollY>=s.offsetTop-hh-80) current=s.id});
+    navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+current));
+    document.getElementById('header')?.classList.toggle('scrolled',window.scrollY>10);
+  },{passive:true});
+
+  // 5. Reveal on scroll
+  const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const siblings=entry.target.closest('.features-grid,.bonus-grid')?.querySelectorAll('.reveal,.reveal-left,.reveal-right');
+        const idx=siblings?Array.from(siblings).indexOf(entry.target):0;
+        setTimeout(()=>entry.target.classList.add('active'),idx*90);
+        obs.unobserve(entry.target);
+      }
+    });
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  revealEls.forEach(el=>obs.observe(el));
+
+  // Trigger hero immediately
+  window.addEventListener('load',()=>{
+    document.querySelectorAll('.hero .reveal-left,.hero .reveal-right,.hero .reveal').forEach(el=>el.classList.add('active'));
+  });
+
+  // 6. FAQ accordion
+  document.querySelectorAll('.accordion-item').forEach(item=>{
+    item.querySelector('.accordion-header').addEventListener('click',()=>{
+      const active=item.classList.contains('is-open');
+      document.querySelectorAll('.accordion-item').forEach(i=>i.classList.remove('is-open'));
+      if(!active) item.classList.add('is-open');
+    });
+  });
+
+  // 7. Feature read more
+  document.querySelectorAll('.btn-read').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      e.preventDefault();
+      const card=btn.closest('.feature-card');
+      card.classList.toggle('expanded');
+      const exp=card.classList.contains('expanded');
+      const icon=btn.querySelector('i')?.outerHTML||'';
+      btn.innerHTML=(exp?'READ LESS':'READ MORE')+' '+icon;
+    });
+  });
+
+  // 8. Floating CTA
+  const floatingCta=document.getElementById('floatingCta');
+  const heroSection=document.getElementById('overview');
+  const registerSection=document.getElementById('register');
+  if(floatingCta&&heroSection){
+    window.addEventListener('scroll',()=>{
+      const heroBottom=heroSection.offsetTop+heroSection.offsetHeight;
+      const regTop=registerSection?registerSection.offsetTop:Infinity;
+      const scrolled=window.scrollY;
+      floatingCta.classList.toggle('visible',scrolled>heroBottom-100&&!(scrolled+window.innerHeight>regTop+200));
+    },{passive:true});
+  }
+
+  // 9. Form submit
+  document.getElementById('regForm')?.addEventListener('submit',e=>{
+    e.preventDefault();
+    const btn=document.getElementById('submitBtn');
+    btn.innerHTML='<i class="fa-solid fa-circle-check"></i> Pendaftaran Berhasil!';
+    btn.style.background='#2e7d32';
+    btn.disabled=true;
+  });
+});
+</script>
+</body>
+</html>
