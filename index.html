@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
   --primary-blue:#003874;--navy-dark:#00254d;--navy-light:#1a5a9e;
@@ -316,6 +317,97 @@ img{max-width:100%;display:block}
   .time-box span{font-size:1.2rem}
   .reg-form-card{padding:1.25rem}
 }
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(0, 56, 116, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 1.5rem;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal-content {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+.modal-overlay.open .modal-content {
+  transform: translateY(0);
+}
+.modal-icon {
+  width: 72px;
+  height: 72px;
+  background: var(--light-blue);
+  color: var(--primary-blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 1.5rem;
+}
+.modal-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-blue);
+}
+.modal-content p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+.modal-content strong {
+  color: var(--text-dark);
+}
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.btn-modal-primary {
+  background: var(--primary-blue);
+  color: white;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn-modal-primary:hover {
+  background: var(--navy-dark);
+}
+.btn-modal-secondary {
+  background: transparent;
+  color: var(--text-muted);
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn-modal-secondary:hover {
+  background: var(--bg-light);
+  color: var(--text-dark);
+}
 </style>
 </head>
 <body>
@@ -493,7 +585,7 @@ img{max-width:100%;display:block}
           <div class="cred-item"><i class="fa-solid fa-graduation-cap"></i><span>University of Minnesota</span></div>
           <div class="cred-item"><i class="fa-solid fa-star"></i><span>LPDP Awardee PK-191</span></div>
           <div class="cred-item"><i class="fa-solid fa-chalkboard-user"></i><span>Master of Business Taxation</span></div>
-          <div class="cred-item"><i class="fa-solid fa-users"></i><span>1,00+ students guided</span></div>
+          <div class="cred-item"><i class="fa-solid fa-users"></i><span>100+ students guided</span></div>
         </div>
         <div class="speaker-nums">
           <div class="speaker-num-item"><strong>100+</strong><span>Students guided</span></div>
@@ -584,23 +676,23 @@ img{max-width:100%;display:block}
           <div class="form-grid">
             <div class="form-group">
               <label><i class="fa-regular fa-user"></i> Nama Lengkap</label>
-              <input type="text" placeholder="Nama kamu" required>
+              <input type="text" name="full_name" placeholder="Nama kamu" required>
             </div>
             <div class="form-group">
               <label><i class="fa-regular fa-envelope"></i> Email</label>
-              <input type="email" placeholder="email@kamu.com" required>
+              <input type="email" name="email" placeholder="email@kamu.com" required>
             </div>
             <div class="form-group">
               <label><i class="fa-brands fa-whatsapp"></i> WhatsApp</label>
-              <input type="tel" placeholder="08xxxxxxxxxx" required>
+              <input type="tel" name="whatsapp" placeholder="08xxxxxxxxxx" required>
             </div>
             <div class="form-group">
               <label><i class="fa-solid fa-id-badge"></i> Status Saat Ini</label>
-              <input type="text" placeholder="Mahasiswa / Karyawan / dll" required>
+              <input type="text" name="current_status" placeholder="Mahasiswa / Karyawan / dll" required>
             </div>
             <div class="form-group">
               <label><i class="fa-solid fa-graduation-cap"></i> Target Jenjang</label>
-              <select required>
+              <select name="target_level" required>
                 <option value="" disabled selected>Pilih jenjang</option>
                 <option value="bachelor">Bachelor (S1)</option>
                 <option value="master">Master (S2)</option>
@@ -608,7 +700,7 @@ img{max-width:100%;display:block}
             </div>
             <div class="form-group">
               <label><i class="fa-regular fa-calendar"></i> Target Intake</label>
-              <select required>
+              <select name="target_intake" required>
                 <option value="" disabled selected>Pilih intake</option>
                 <option value="2026">2026</option>
                 <option value="2027">2027</option>
@@ -616,11 +708,11 @@ img{max-width:100%;display:block}
             </div>
             <div class="form-group">
               <label><i class="fa-solid fa-globe"></i> Negara Tujuan</label>
-              <input type="text" placeholder="UK, USA, Australia..." required>
+              <input type="text" name="target_country" placeholder="UK, USA, Australia..." required>
             </div>
             <div class="form-group">
               <label><i class="fa-solid fa-language"></i> Status Tes Bahasa</label>
-              <select required>
+              <select name="language_test_status" required>
                 <option value="" disabled selected>Pilih status</option>
                 <option value="none">Belum ada</option>
                 <option value="preparing">Sedang persiapan IELTS</option>
@@ -629,7 +721,7 @@ img{max-width:100%;display:block}
             </div>
             <div class="form-group full-width">
               <label><i class="fa-solid fa-ticket"></i> Kode Referral (opsional)</label>
-              <input type="text" placeholder="Masukkan kode jika ada">
+              <input type="text" name="referral_code" placeholder="Masukkan kode jika ada">
             </div>
           </div>
           <button type="submit" class="btn-register" id="submitBtn">
@@ -686,114 +778,21 @@ img{max-width:100%;display:block}
 
 <a href="#register" class="floating-cta" id="floatingCta">Daftar Gratis <i class="fa-solid fa-arrow-right"></i></a>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
+<!-- Referral Modal -->
+<div class="modal-overlay" id="referralModal">
+  <div class="modal-content">
+    <div class="modal-icon">
+      <i class="fa-solid fa-gift"></i>
+    </div>
+    <h3>Lupa Kode Referral?</h3>
+    <p>Gunakan kode referral untuk mendapatkan <strong>Diskon Program Persiapan IELTS, GRE, dan GMAT</strong> di Ultimate Education — eksklusif hanya untuk peserta webinar!</p>
+    <div class="modal-actions">
+      <button class="btn-modal-primary" id="btnInputCode">Input Kode Sekarang</button>
+      <button class="btn-modal-secondary" id="btnContinueNoCode">Lanjut Tanpa Kode</button>
+    </div>
+  </div>
+</div>
 
-  // 1. Countdown
-  const countdown = () => {
-    const target = new Date('May 2, 2026 13:00:00').getTime();
-    const gap = target - Date.now();
-    const s=1000,m=s*60,h=m*60,d=h*24;
-    const fmt=n=>(n<10?'0':'')+Math.max(0,n);
-    const dd=Math.floor(gap/d),hh=Math.floor((gap%d)/h),mm=Math.floor((gap%h)/m),ss=Math.floor((gap%m)/s);
-    const heroEl=document.getElementById('hero-countdown');
-    if(heroEl) heroEl.innerHTML=`<div class="time-box"><span>${fmt(dd)}</span><label>Days</label></div><div class="time-box"><span>${fmt(hh)}</span><label>Hours</label></div><div class="time-box"><span>${fmt(mm)}</span><label>Mins</label></div><div class="time-box"><span>${fmt(ss)}</span><label>Secs</label></div>`;
-    const regEl=document.getElementById('countdown');
-    if(regEl) regEl.innerHTML=`<div class="time"><span>${fmt(dd)}</span><label>D</label></div><div class="time"><span>${fmt(hh)}</span><label>H</label></div><div class="time"><span>${fmt(mm)}</span><label>M</label></div><div class="time"><span>${fmt(ss)}</span><label>S</label></div>`;
-  };
-  countdown(); setInterval(countdown,1000);
-
-  // 2. Mobile nav
-  const hamburger=document.getElementById('hamburger');
-  const mobileNav=document.getElementById('mobileNav');
-  const mobileNavClose=document.getElementById('mobileNavClose');
-  hamburger?.addEventListener('click',()=>{mobileNav.classList.add('open');document.body.style.overflow='hidden'});
-  mobileNavClose?.addEventListener('click',()=>{mobileNav.classList.remove('open');document.body.style.overflow=''});
-  document.querySelectorAll('.mobile-nav-link').forEach(l=>l.addEventListener('click',()=>{mobileNav.classList.remove('open');document.body.style.overflow=''}));
-
-  // 3. Smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(link=>{
-    link.addEventListener('click',e=>{
-      const href=link.getAttribute('href');
-      if(href==='#') return;
-      const target=document.querySelector(href);
-      if(target){e.preventDefault();const hh=document.getElementById('header')?.offsetHeight||72;window.scrollTo({top:target.getBoundingClientRect().top+window.scrollY-hh-12,behavior:'smooth'})}
-    });
-  });
-
-  // 4. Active nav
-  const sections=document.querySelectorAll('section[id]');
-  const navLinks=document.querySelectorAll('.nav-link');
-  window.addEventListener('scroll',()=>{
-    let current='';
-    const hh=document.getElementById('header')?.offsetHeight||72;
-    sections.forEach(s=>{if(window.scrollY>=s.offsetTop-hh-80) current=s.id});
-    navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+current));
-    document.getElementById('header')?.classList.toggle('scrolled',window.scrollY>10);
-  },{passive:true});
-
-  // 5. Reveal on scroll
-  const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        const siblings=entry.target.closest('.features-grid,.bonus-grid')?.querySelectorAll('.reveal,.reveal-left,.reveal-right');
-        const idx=siblings?Array.from(siblings).indexOf(entry.target):0;
-        setTimeout(()=>entry.target.classList.add('active'),idx*90);
-        obs.unobserve(entry.target);
-      }
-    });
-  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
-  revealEls.forEach(el=>obs.observe(el));
-
-  // Trigger hero immediately
-  window.addEventListener('load',()=>{
-    document.querySelectorAll('.hero .reveal-left,.hero .reveal-right,.hero .reveal').forEach(el=>el.classList.add('active'));
-  });
-
-  // 6. FAQ accordion
-  document.querySelectorAll('.accordion-item').forEach(item=>{
-    item.querySelector('.accordion-header').addEventListener('click',()=>{
-      const active=item.classList.contains('is-open');
-      document.querySelectorAll('.accordion-item').forEach(i=>i.classList.remove('is-open'));
-      if(!active) item.classList.add('is-open');
-    });
-  });
-
-  // 7. Feature read more
-  document.querySelectorAll('.btn-read').forEach(btn=>{
-    btn.addEventListener('click',e=>{
-      e.preventDefault();
-      const card=btn.closest('.feature-card');
-      card.classList.toggle('expanded');
-      const exp=card.classList.contains('expanded');
-      const icon=btn.querySelector('i')?.outerHTML||'';
-      btn.innerHTML=(exp?'READ LESS':'READ MORE')+' '+icon;
-    });
-  });
-
-  // 8. Floating CTA
-  const floatingCta=document.getElementById('floatingCta');
-  const heroSection=document.getElementById('overview');
-  const registerSection=document.getElementById('register');
-  if(floatingCta&&heroSection){
-    window.addEventListener('scroll',()=>{
-      const heroBottom=heroSection.offsetTop+heroSection.offsetHeight;
-      const regTop=registerSection?registerSection.offsetTop:Infinity;
-      const scrolled=window.scrollY;
-      floatingCta.classList.toggle('visible',scrolled>heroBottom-100&&!(scrolled+window.innerHeight>regTop+200));
-    },{passive:true});
-  }
-
-  // 9. Form submit
-  document.getElementById('regForm')?.addEventListener('submit',e=>{
-    e.preventDefault();
-    const btn=document.getElementById('submitBtn');
-    btn.innerHTML='<i class="fa-solid fa-circle-check"></i> Pendaftaran Berhasil!';
-    btn.style.background='#2e7d32';
-    btn.disabled=true;
-  });
-});
-</script>
+<script src="script.js"></script>
 </body>
 </html>
