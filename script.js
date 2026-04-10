@@ -97,8 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 9. Form submit
-  const supabaseUrl = 'https://rbivamtmcadfnemqcvac.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJiaXZhbXRtY2FkZm5lbXFjdmFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4MTU2MjgsImV4cCI6MjA4MTM5MTYyOH0.hZTprt4i3Y896uY_7m-lz-8T01lAArfj7hBIxw1utnc';
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
   const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
   const sanitizeInput = (str) => {
