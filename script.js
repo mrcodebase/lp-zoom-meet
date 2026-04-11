@@ -22,26 +22,80 @@ document.addEventListener('DOMContentLoaded', () => {
   mobileNavClose?.addEventListener('click',()=>{mobileNav.classList.remove('open');document.body.style.overflow=''});
   document.querySelectorAll('.mobile-nav-link').forEach(l=>l.addEventListener('click',()=>{mobileNav.classList.remove('open');document.body.style.overflow=''}));
 
-  // 3. Smooth scroll
+  const routeMap = {
+    'overview': '/',
+    'content': '/session',
+    'speaker': '/speaker',
+    'bonus': '/bonus',
+    'faq': '/faq',
+    'register': '/daftar'
+  };
+
+  const reverseRouteMap = {
+    '/': 'overview',
+    '/session': 'content',
+    '/speaker': 'speaker',
+    '/bonus': 'bonus',
+    '/faq': 'faq',
+    '/daftar': 'register'
+  };
+
+  // 3. Smooth scroll with History API
   document.querySelectorAll('a[href^="#"]').forEach(link=>{
     link.addEventListener('click',e=>{
       const href=link.getAttribute('href');
       if(href==='#') return;
-      const target=document.querySelector(href);
-      if(target){e.preventDefault();const hh=document.getElementById('header')?.offsetHeight||72;window.scrollTo({top:target.getBoundingClientRect().top+window.scrollY-hh-12,behavior:'smooth'})}
+      const targetId=href.substring(1);
+      const target=document.getElementById(targetId);
+      if(target){
+        e.preventDefault();
+        const hh=document.getElementById('header')?.offsetHeight||72;
+        window.scrollTo({top:target.getBoundingClientRect().top+window.scrollY-hh-12,behavior:'smooth'});
+        
+        // Update URL cleanly
+        if (routeMap[targetId]) {
+          window.history.pushState(null, null, routeMap[targetId]);
+        }
+      }
     });
   });
 
-  // 4. Active nav
+  // 4. Active nav & Scroll Spy route syncing
   const sections=document.querySelectorAll('section[id]');
   const navLinks=document.querySelectorAll('.nav-link');
+  let currentPath = window.location.pathname;
+
   window.addEventListener('scroll',()=>{
     let current='';
     const hh=document.getElementById('header')?.offsetHeight||72;
     sections.forEach(s=>{if(window.scrollY>=s.offsetTop-hh-80) current=s.id});
+    
     navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+current));
     document.getElementById('header')?.classList.toggle('scrolled',window.scrollY>10);
+
+    // Update the URL as user scrolls
+    if (current && routeMap[current] && routeMap[current] !== currentPath) {
+      currentPath = routeMap[current];
+      window.history.replaceState(null, null, currentPath);
+    }
   },{passive:true});
+
+  // Handle incoming direct routes (e.g., someone visiting /daftar)
+  window.addEventListener('load', () => {
+    const path = window.location.pathname;
+    const cleanPath = path.endsWith('/') && path.length > 1 ? path.slice(0, -1) : path;
+    
+    if (reverseRouteMap[cleanPath]) {
+      const targetId = reverseRouteMap[cleanPath];
+      const target = document.getElementById(targetId);
+      if (target) {
+        setTimeout(() => {
+          const hh = document.getElementById('header')?.offsetHeight || 72;
+          window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - hh - 12, behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  });
 
   // 5. Reveal on scroll
   const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
