@@ -213,6 +213,12 @@ document.addEventListener('DOMContentLoaded', () => {
       submitBtn.style.background = '#2e7d32';
       regForm.reset();
       skipReferralCheck = false;
+
+      // Redirect to WhatsApp group after a short delay
+      setTimeout(() => {
+        submitBtn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Mengalihkan ke Grup...';
+        window.location.href = 'https://chat.whatsapp.com/HRsIcOICAl6GDjxmifR9AC?mode=gi_t';
+      }, 1500);
     } catch (err) {
       console.error('Registration error:', err);
       submitBtn.disabled = false;
