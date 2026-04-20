@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 1. Countdown
   const countdown = () => {
-    const target = new Date('May 2, 2026 13:00:00').getTime();
+    const target = new Date('April 13, 2026 08:00:00').getTime();
     const gap = target - Date.now();
     const s=1000,m=s*60,h=m*60,d=h*24;
     const fmt=n=>(n<10?'0':'')+Math.max(0,n);
