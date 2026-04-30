@@ -179,8 +179,56 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnInputCode = document.getElementById('btnInputCode');
   const btnContinueNoCode = document.getElementById('btnContinueNoCode');
   const refInput = regForm.querySelector('[name="referral_code"]');
+  const statusModal = document.getElementById('statusModal');
+  const statusIcon = document.getElementById('statusIcon');
+  const statusTitle = document.getElementById('statusTitle');
+  const statusMessage = document.getElementById('statusMessage');
+  const btnStatusClose = document.getElementById('btnStatusClose');
 
   let skipReferralCheck = false;
+
+  const showStatusModal = (type, title, message) => {
+    statusModal.classList.add('open');
+    statusTitle.textContent = title;
+    statusMessage.textContent = message;
+    
+    if (type === 'success') {
+      statusIcon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+      statusIcon.style.color = '#2e7d32';
+      statusIcon.style.background = '#e8f5e9';
+    } else {
+      statusIcon.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+      statusIcon.style.color = '#c62828';
+      statusIcon.style.background = '#ffebee';
+    }
+  };
+
+  btnStatusClose?.addEventListener('click', () => {
+    statusModal.classList.remove('open');
+  });
+
+  const validateForm = (data) => {
+    if (!data.full_name || data.full_name.length < 3) {
+      showStatusModal('error', 'Nama tidak valid', 'Mohon masukkan nama lengkap Anda.');
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+      showStatusModal('error', 'Email tidak valid', 'Mohon masukkan format email yang benar.');
+      return false;
+    }
+    const waRegex = /^\d{9,15}$/;
+    const cleanWa = data.whatsapp.replace(/\D/g, '');
+    if (!waRegex.test(cleanWa)) {
+      showStatusModal('error', 'Nomor WA tidak valid', 'Mohon masukkan nomor WhatsApp yang benar (9-15 digit).');
+      return false;
+    }
+    if (!data.current_status) {
+      showStatusModal('error', 'Status belum dipilih', 'Mohon pilih status Anda saat ini.');
+      return false;
+    }
+    return true;
+  };
 
   const handleRegistration = async () => {
     // Clear previous state
@@ -196,6 +244,13 @@ document.addEventListener('DOMContentLoaded', () => {
         payload[key] = sanitizeInput(value || '');
       });
 
+      // Validation
+      if (!validateForm(payload)) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+        return;
+      }
+
       // Referral mapping
       const refCode = payload.referral_code.toUpperCase().trim();
       payload.referral_source = referralMap[refCode] || (refCode ? 'Other Code' : 'Organic / No Code');
@@ -209,21 +264,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (error) throw error;
 
       // Success state
-      submitBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Pendaftaran Berhasil!';
+      showStatusModal('success', 'Pendaftaran Berhasil!', 'Terima kasih telah mendaftar. Anda akan segera diarahkan ke grup WhatsApp peserta.');
+      submitBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Berhasil!';
       submitBtn.style.background = '#2e7d32';
       regForm.reset();
       skipReferralCheck = false;
 
-      // Redirect to WhatsApp group after a short delay
+      // Redirect after a delay
       setTimeout(() => {
-        submitBtn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Mengalihkan ke Grup...';
         window.location.href = 'https://chat.whatsapp.com/HRsIcOICAl6GDjxmifR9AC?mode=gi_t';
-      }, 1500);
+      }, 3000);
     } catch (err) {
       console.error('Registration error:', err);
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalBtnText;
-      alert('Maaf, terjadi kesalahan saat pendaftaran. Silakan coba lagi atau hubungi kami via WhatsApp.');
+      showStatusModal('error', 'Gagal Mendaftar', 'Maaf, terjadi kesalahan saat mengirim data. Silakan cek koneksi internet Anda atau hubungi kami via WhatsApp.');
     }
   };
 

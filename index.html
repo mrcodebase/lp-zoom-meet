@@ -674,7 +674,7 @@ img{max-width:100%;display:block}
         </div>
         <form id="regForm">
           <div class="form-grid">
-            <div class="form-group">
+            <div class="form-group full-width">
               <label><i class="fa-regular fa-user"></i> Nama Lengkap</label>
               <input type="text" name="full_name" placeholder="Nama kamu" required>
             </div>
@@ -698,35 +698,6 @@ img{max-width:100%;display:block}
               </select>
             </div>
             <div class="form-group">
-              <label><i class="fa-solid fa-graduation-cap"></i> Target Jenjang</label>
-              <select name="target_level" required>
-                <option value="" disabled selected>Pilih jenjang</option>
-                <option value="bachelor">Bachelor (S1)</option>
-                <option value="master">Master (S2)</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label><i class="fa-regular fa-calendar"></i> Target Intake</label>
-              <select name="target_intake" required>
-                <option value="" disabled selected>Pilih intake</option>
-                <option value="2026">2026</option>
-                <option value="2027">2027</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label><i class="fa-solid fa-globe"></i> Negara Tujuan</label>
-              <input type="text" name="target_country" placeholder="UK, USA, Australia..." required>
-            </div>
-            <div class="form-group">
-              <label><i class="fa-solid fa-language"></i> Status Tes Bahasa</label>
-              <select name="language_test_status" required>
-                <option value="" disabled selected>Pilih status</option>
-                <option value="none">Belum ada</option>
-                <option value="preparing">Sedang persiapan IELTS</option>
-                <option value="ready">Sudah punya skor</option>
-              </select>
-            </div>
-            <div class="form-group full-width">
               <label><i class="fa-solid fa-ticket"></i> Kode Referral (opsional)</label>
               <input type="text" name="referral_code" placeholder="Masukkan kode jika ada">
             </div>
@@ -796,6 +767,20 @@ img{max-width:100%;display:block}
     <div class="modal-actions">
       <button class="btn-modal-primary" id="btnInputCode">Input Kode Sekarang</button>
       <button class="btn-modal-secondary" id="btnContinueNoCode">Lanjut Tanpa Kode</button>
+    </div>
+  </div>
+</div>
+
+<!-- Status Modal (Success/Error) -->
+<div class="modal-overlay" id="statusModal">
+  <div class="modal-content">
+    <div class="modal-icon" id="statusIcon">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+    <h3 id="statusTitle">Pendaftaran Berhasil!</h3>
+    <p id="statusMessage">Terima kasih telah mendaftar. Anda akan segera diarahkan ke grup WhatsApp.</p>
+    <div class="modal-actions">
+      <button class="btn-modal-primary" id="btnStatusClose">Tutup</button>
     </div>
   </div>
 </div>
